@@ -1,5 +1,3 @@
-// src/pages/Notifications.jsx
-
 import React, { useContext } from "react";
 import { NotificationContext } from "../context/NotificationContext";
 import { Link, useNavigate } from "react-router-dom";

@@ -1,4 +1,3 @@
-// File: src/pages/admin/AdminReportIncident.jsx
 import React, { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
@@ -15,13 +14,14 @@ const AdminReportIncident = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    //Validation & Authorization
     if (!token) return toast.error("⚠️ You must be logged in as admin.");
     if (!description || images.length === 0 || !state || !coordinates[0]) {
       return toast.error("⚠️ Fill all fields and upload at least one image.");
     }
 
     setLoading(true);
-
+    //Files cannot be directly sent in a simple JSON POST request. They are converted into Base64 strings.
     try {
       const base64Images = await Promise.all(
         Array.from(images).map(

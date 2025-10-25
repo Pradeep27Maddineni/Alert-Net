@@ -1,4 +1,3 @@
-// src/context/NotificationContext.jsx
 import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "./AuthContext";
@@ -61,3 +60,11 @@ export const NotificationProvider = ({ children }) => {
     </NotificationContext.Provider>
   );
 };
+
+/*
+  axios.get() — fetches past notifications from REST API.
+  useEffect() — runs side effects (fetch data or listen to socket events).
+  useContext(AuthContext) — gets user and token.
+  useContext(SocketContext) — gets live socket connection.
+  toast() — displays pop-up notifications (via react-hot-toast)
+*/

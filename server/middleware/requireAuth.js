@@ -1,4 +1,3 @@
-// File: middleware/requireAuth.js
 import jwt from 'jsonwebtoken';
 
 const requireAuth = (req, res, next) => {
@@ -16,5 +15,4 @@ const requireAuth = (req, res, next) => {
     return res.status(401).json({ message: 'Invalid token' });
   }
 };
-
 export default requireAuth;

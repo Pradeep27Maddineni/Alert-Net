@@ -10,11 +10,12 @@ const AdminDashboard = () => {
   const [stats, setStats] = useState({ users: 0, incidents: 0 });
 
   useEffect(() => {
+    //Authorization Check
     if (!user || user.role !== "admin") {
       navigate("/login");
       return;
     }
-
+    //Data Fetching
     const fetchStats = async () => {
       try {
         const res = await axios.get("https://alertnet-backend-mnnu.onrender.com/api/admin/stats", {

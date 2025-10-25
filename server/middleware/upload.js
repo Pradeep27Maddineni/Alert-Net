@@ -1,4 +1,3 @@
-// middleware/upload.js
 import multer from 'multer';
 import { v2 as cloudinary } from 'cloudinary';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
@@ -20,7 +19,6 @@ const storage = new CloudinaryStorage({
   },
 });
 
-// Multer middleware with cloudinary storage
 const upload = multer({ storage });
 
 export default upload;

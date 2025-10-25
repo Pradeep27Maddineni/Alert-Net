@@ -1,4 +1,3 @@
-// src/components/InfoSidebar.jsx
 import React from "react";
 
 const crimeFacts = [

@@ -1,0 +1,136 @@
+main.jsx:
+first file that starts the app.
+react:lets you write UI components
+reactDOM:lets you render those components into actual browser
+BrowserRouter:handles navigation (like moving between pages without reloading).
+Toaster:adds a popup notification system for success/error/info messages.
+
+...
+
+What is a WebSocket?
+Ans:A WebSocket is a special way for your browser (client) and your server to talk to each other in real time, without reloading the page or making repeated requests.
+=>just like a phone call instead of sending letters one by one
+Normally (without WebSockets):
+    Let’s say you have a chat app.
+    The browser sends a request:
+    “Hey server, any new messages?”
+    The server replies:
+    “Nope, nothing yet.”
+    This keeps happening every few seconds. (This is called "polling").
+    It’s slow, wastes bandwidth, and puts load on the server.
+
+With WebSockets:
+    With a WebSocket connection, the browser and server open a live connection (a persistent link).
+    Once connected:
+    Both sides can send and receive data instantly, at any time.
+    No need to “ask again and again.”
+    Example:
+    User A sends “Hi” → Server → Instantly goes to User B.
+    Server can also send data (like notifications or updates) without waiting for a request.
+
+How It Works (Simply):
+    Client requests connection
+    const socket = new WebSocket("ws://localhost:5000");
+    The browser asks the server to open a WebSocket connection (note: uses ws:// or wss://).
+    Server accepts
+    The server upgrades the connection from HTTP to WebSocket.
+    Now both sides are connected through a full-duplex (two-way) channel.
+    Data flows both ways
+    Client can send messages anytime.
+    Server can send messages anytime.
+    Connection stays open
+    Until either side closes it.
+
+ws://	Unsecured
+wss://	Secured (like HTTPS)
+
+Chat apps (real-time messages)
+Notifications (live alerts or updates)
+Live dashboards (stock prices, analytics)
+Gaming (real-time player movement)
+
+...
+
+
+React Hooks:
+    Hooks are special functions in React that let you add features (like state, context, etc.) to your functional components — without needing class components.
+    
+useState:
+useState lets your component remember values — like user input, toggles, counters, etc.
+    Normally, when a component re-renders, all variables inside it are reset.
+    useState solves that by keeping data stored between renders.
+
+useContext:
+    useContext helps you share data easily between many React components without passing props manually every time.
+You have an app with many components:
+
+App
+ ┣━ Navbar
+ ┣━ Profile
+ ┗━ Footer
+
+Now, suppose you want to show the logged-in user’s name in Navbar, Profile, and Footer.
+Normally, you would have to:
+Pass the user data from App → Navbar
+App → Profile
+App → Footer
+That’s a lot of prop passing(called prop drilling).
+
+useContext solves that!
+With useContext, you can:
+Create one global place to store data (like user info, theme, etc.)
+Access it directly from any component — no props needed.
+
+In simple words:
+createContext() → Creates a “box” to store shared data.
+Provider → Wraps your app and gives that data to all components.
+useContext() → Lets a component take data out of that box.
+
+useEffect:
+The useEffect hook in React lets you perform side effects in your functional components.
+Side effects are any operations that affect something outside of the component's render, such as:
+Fetching data from an API
+Setting up a subscription (like a timer or a WebSocket)
+Manually changing the DOM (e.g., updating the document title)
+Think of it as a way to say, "Do this after React has rendered the component." It combines the functionality of componentDidMount, componentDidUpdate, and componentWillUnmount from older class components into a single API.
+The hook takes two arguments: a callback function (the "effect") and an optional dependency array.
+1. No Dependency Array (Runs on every render)
+2. Empty Dependency Array [] (Runs only once)
+3. Array with Dependencies [count] (Runs when dependencies change)
+
+Axios:
+Axios is a popular JavaScript library that helps your React app talk to a server.
+Think of your React app as a restaurant kitchen. It can prepare the food (the UI), but it needs someone to go out and get ingredients (data) or deliver an order (send data).
+Axios is that delivery person.
+You use it inside your React components (often within a useEffect hook) to make HTTP requests. This is just a fancy way of saying you're asking a server for information or sending it new information.
+The most common requests are:
+    GET: To fetch data (e.g., get a list of products, a user's profile).
+    POST: To create new data (e.g., submit a new blog post, sign up a user).
+    PUT / PATCH: To update existing data (e.g., edit a user's profile).
+    DELETE: To delete data (e.g., remove a blog post).
+
+Why use Axios instead of the built-in fetch?
+    Automatic JSON: Axios automatically converts the data you send and receive into a usable JavaScript object. With fetch, this is a two-step process (you have to manually call .json()).
+    Better Error Handling
+    Browser Support: It works on older browsers without any extra setup.
+
+
+Question: Can you explain how your app handles real-time notifications?
+Answer (structured):
+Sure.
+My app uses React Context for global state management and WebSockets for real-time updates.
+The AuthContext stores the logged-in user and JWT token, which are used by other contexts.
+The SocketContext establishes a WebSocket connection using socket.io-client. Once the user logs in, it emits a join event to the backend with the user’s ID, allowing the server to push personalized events.
+The NotificationContext uses two effects — one to fetch old notifications via REST API, and another to listen for live events from the socket. When a new notification arrives, it updates local state and shows a toast alert using react-hot-toast.
+This architecture ensures seamless real-time communication without prop drilling and keeps UI state synced across the app.
+
+What is Mongoose and why do we use it?
+Mongoose is an ODM (Object Data Modeling) library for MongoDB in Node.js.
+It helps define schemas for collections, enforces validation, and provides an easy API for CRUD operations.
+Basically, it makes working with MongoDB more structured and developer-friendly.
+Simple Analogy:
+Imagine MongoDB is like a free-form notebook —
+you can write anything, anywhere (since it’s schemaless).
+But that freedom can get messy.
+So Mongoose says:
+“Let’s agree on a template (Schema) before we write anything — so things stay clean and predictable.”

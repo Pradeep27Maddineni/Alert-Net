@@ -9,13 +9,14 @@ const AdminIncidents = () => {
 
   const [incidents, setIncidents] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  //This hook executes immediately after the component mounts and handles the security check and data fetching.
   useEffect(() => {
+    //Authorization Check
     if (!user || user.role !== "admin") {
       navigate("/login");
       return;
     }
-
+    //Data Fetching
     const fetchIncidents = async () => {
       try {
         const res = await axios.get("https://alertnet-backend-mnnu.onrender.com/api/admin/incidents", {
@@ -72,3 +73,9 @@ const AdminIncidents = () => {
 };
 
 export default AdminIncidents;
+/*
+The AdminIncidents component is a secure administrative tool that:
+Guards its content against non-admin users.
+Fetches a comprehensive list of all reported incidents from the backend.
+Presents the data in a clear, organized table format for easy review by the administrator.
+*/
