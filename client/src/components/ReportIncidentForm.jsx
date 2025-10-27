@@ -27,7 +27,7 @@ const ReportIncidentForm = () => {
       const res = await axios.get(
         `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(
           query
-        )}&key=991d0eb7e0aa4fe191a3e71bbe3b62c7`
+        )}&key=b1412fa22d924ac9873ea5d5522de2c6`
       );
 
       if (!res.data.results || res.data.results.length === 0) {

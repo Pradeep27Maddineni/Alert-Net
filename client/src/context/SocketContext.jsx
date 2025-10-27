@@ -5,26 +5,49 @@ import { AuthContext } from "./AuthContext";
 export const SocketContext = createContext();
 
 export const SocketProvider = ({ children }) => {
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext); // 👈 include loading if available
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const newSocket = io(import.meta.env.VITE_BACKEND_URL || "https://alertnet-backend-mnnu.onrender.com", {
-      transports: ["websocket"],
-    });
-    setSocket(newSocket);
+    const newSocket = io(
+      import.meta.env.VITE_BACKEND_URL || "https://alertnet-backend-mnnu.onrender.com",
+      {
+        transports: ["websocket", "polling"], // fallback for Render
+        withCredentials: true,
+        reconnectionAttempts: 5,
+        reconnectionDelay: 2000,
+      }
+    );
 
-    return () => {
-      newSocket.disconnect();
-    };
+    newSocket.on("connect", () => {
+      console.log("✅ Socket connected:", newSocket.id);
+    });
+
+    newSocket.on("connect_error", (err) => {
+      console.error("❌ Socket connection error:", err.message);
+    });
+
+    setSocket(newSocket);
+    return () => newSocket.disconnect();
   }, []);
 
   useEffect(() => {
-    if (socket && user && user._id) {
-      console.log("✅ Emitting join with userId:", user._id);
-      socket.emit("join", user._id);
-    } else if (socket && (!user || !user._id)) {
-      console.warn("⚠️ Skipping join: user or user._id is missing");
+    if (!socket) return;
+
+    // ✅ Wait until user is ready (not null)
+    if (user && user._id) {
+      console.log("✅ Joining user room:", user._id);
+      socket.emit("joinChatRoom", user._id);
+    } else {
+      console.warn("⚠️ User not ready yet, retrying join...");
+      // Optional retry after small delay
+      const timer = setTimeout(() => {
+        if (user && user._id) {
+          console.log("🔁 Retrying join:", user._id);
+          socket.emit("joinChatRoom", user._id);
+        }
+      }, 2000);
+      return () => clearTimeout(timer);
     }
   }, [socket, user]);
 
@@ -34,15 +57,3 @@ export const SocketProvider = ({ children }) => {
     </SocketContext.Provider>
   );
 };
-
-/*
-  SocketContext.jsx — Manages Real-Time Connection::
-  io() — connects to the backend WebSocket server (from socket.io-client).
-  useEffect() — creates and cleans up the connection when the component mounts/unmounts.
-  emit() — sends messages/events to the server.
-  useContext(AuthContext) — gets user info to tell the server which user connected.
-  The SocketProvider uses two useEffect hooks:
-    The first one runs once to create the socket connection using socket.io-client. It sets up the socket and cleans it up on unmount to prevent memory leaks.
-    The second one runs every time either the socket or user changes. When both are available, it emits a "join" event to the backend with the user’s ID, so the server knows which user is connected.
-    This design cleanly separates connection setup and user authentication, avoids unnecessary reconnections, and ensures the socket is always properly managed.
-*/

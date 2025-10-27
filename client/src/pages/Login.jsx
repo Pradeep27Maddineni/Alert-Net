@@ -26,33 +26,64 @@ const Login = () => {
   e.preventDefault();
   setMessage("");
   setLoading(true);
+
   try {
-    const res = await axios.post("https://alertnet-backend-mnnu.onrender.com/api/auth/login", {
-      ...formData,
-      isAdmin,
-    });
+    // Validate before sending
+    if (!formData.email || !formData.password) {
+      setMessage("⚠️ Please enter both email and password.");
+      setLoading(false);
+      return;
+    }
+    
+
+    // Send POST request
+    const res = await axios.post(
+      "https://alertnet-backend-mnnu.onrender.com/api/auth/login",
+      {
+        email: formData.email.trim(),
+        password: formData.password.trim(),
+        isAdmin,
+      },
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    
 
     const { user, token } = res.data;
 
+    // Check for admin authorization
     if (isAdmin && user.role !== "admin") {
       setMessage("❌ You are not authorized as an admin.");
       return;
     }
 
+    // Store login in AuthContext
     login(user, token);
 
+    // Redirect based on role
     if (user.role === "admin") {
       navigate("/admin/dashboard");
     } else {
       navigate("/dashboard");
     }
   } catch (err) {
-    setMessage(err.response?.data?.message || "Login failed");
+    console.error("❌ Login error:", err.response?.data || err.message);
+
+    // Handle backend error message or fallback
+    if (err.response?.status === 400) {
+      // 💡 CHANGE: More descriptive fallback if err.response?.data?.message is empty
+      setMessage(
+        err.response?.data?.message || 
+        "Invalid email or password. (Backend 400 error: Missing message)"
+      );
+    } else {
+      setMessage("⚠️ Server error. Please try again later.");
+    }
   } finally {
     setLoading(false);
   }
 };
-
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-yellow-200 to-blue-300 px-4">

@@ -42,23 +42,27 @@ export const loginUser = async (req, res) => {
     const { email, password, isAdmin } = req.body;
 
     // Admin login check via .env
-    if (
-      isAdmin &&
-      email === process.env.ADMIN_EMAIL &&
-      password === process.env.ADMIN_PASSWORD
-    ) {
-      const token = jwt.sign({ id: 'admin_id', role: 'admin' }, process.env.JWT_SECRET, {
-        expiresIn: '7d'
-      });
+    if (isAdmin) { // Check if the request is specifically for admin login
+      if (
+        email === process.env.ADMIN_EMAIL &&
+        password === process.env.ADMIN_PASSWORD
+      ) {
+        const token = jwt.sign({ id: 'admin_id', role: 'admin' }, process.env.JWT_SECRET, {
+          expiresIn: '7d'
+        });
 
-      return res.status(200).json({
-        token,
-        user: {
-          name: 'Admin',
-          email: process.env.ADMIN_EMAIL,
-          role: 'admin'
-        }
-      });
+        return res.status(200).json({
+          token,
+          user: {
+            name: 'Admin',
+            email: process.env.ADMIN_EMAIL,
+            role: 'admin'
+          }
+        });
+      } else {
+        // 💡 FIX: Return a 400 error if isAdmin is true but credentials are WRONG
+        return res.status(400).json({ message: 'Invalid admin email or password.' });
+      }
     }
 
     // Normal user login
