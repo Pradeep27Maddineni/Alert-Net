@@ -31,18 +31,16 @@ const server = http.createServer(app);
 
 // ✅ Allowed Frontend Origins
 const allowedOrigins = [
-  "https://alertnet-frontend.vercel.app",
+  "https://alert-net-1.onrender.com",
   "http://localhost:5173"
 ];
 
 // ✅ Express CORS Middleware
-app.use(
-  cors({
-    origin: allowedOrigins,
-    methods: ["GET", "POST"],
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: ["https://alert-net-1.onrender.com"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
