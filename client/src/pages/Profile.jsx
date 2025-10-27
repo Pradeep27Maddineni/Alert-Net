@@ -18,7 +18,7 @@ const Profile = () => {
 
   useEffect(() => {
     if (user?.avatar) {
-      setPreview(user.avatar.startsWith("http") ? user.avatar : `https://alertnet-backend-mnnu.onrender.com${user.avatar}`);
+      setPreview(user.avatar.startsWith("http") ? user.avatar : `https://alert-net.onrender.com${user.avatar}`);
     }
   }, [user?.avatar]);
 

@@ -10,7 +10,7 @@ export const SocketProvider = ({ children }) => {
 
   useEffect(() => {
     const newSocket = io(
-      import.meta.env.VITE_BACKEND_URL || "https://alertnet-backend-mnnu.onrender.com",
+      import.meta.env.VITE_BACKEND_URL || "https://alert-net.onrender.com",
       {
         transports: ["websocket", "polling"], // fallback for Render
         withCredentials: true,

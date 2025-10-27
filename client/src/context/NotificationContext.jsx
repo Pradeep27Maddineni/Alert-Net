@@ -15,7 +15,7 @@ export const NotificationProvider = ({ children }) => {
     if (!token || !user || user.role !== "user") return;
 
     try {
-      const res = await axios.get("https://alertnet-backend-mnnu.onrender.com/api/users/notifications", {
+      const res = await axios.get("https://alert-net.onrender.com/api/users/notifications", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setNotifications(res.data.notifications);

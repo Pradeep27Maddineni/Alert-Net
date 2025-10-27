@@ -70,7 +70,7 @@ const ReportIncidentForm = () => {
       );
 
       await axios.post(
-        "https://alertnet-backend-mnnu.onrender.com/api/incidents/upload",
+        "https://alert-net.onrender.com/api/incidents/upload",
         {
           type,
           description,

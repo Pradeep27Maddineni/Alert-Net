@@ -99,7 +99,7 @@ const UserDashboard = () => {
   useEffect(() => {
   const fetchTopReporters = async () => {
     try {
-      const res = await axios.get("https://alertnet-backend-mnnu.onrender.com/api/users/top-reporters");
+      const res = await axios.get("https://alert-net.onrender.com/api/users/top-reporters");
       setTopReporters(res.data);
     } catch (err) {
       console.error("Failed to fetch top reporters", err);

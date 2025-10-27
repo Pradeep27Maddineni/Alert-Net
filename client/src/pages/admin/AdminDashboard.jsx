@@ -18,7 +18,7 @@ const AdminDashboard = () => {
     //Data Fetching
     const fetchStats = async () => {
       try {
-        const res = await axios.get("https://alertnet-backend-mnnu.onrender.com/api/admin/stats", {
+        const res = await axios.get("https://alert-net.onrender.com/api/admin/stats", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

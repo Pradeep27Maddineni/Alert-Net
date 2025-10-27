@@ -13,7 +13,7 @@ const Notifications = () => {
   const handleDelete = async (id) => {
     try {
       const res = await axios.delete(
-        `https://alertnet-backend-mnnu.onrender.com/api/users/notifications/${id}`,
+        `https://alert-net.onrender.com/api/users/notifications/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -68,7 +68,7 @@ const Signup = () => {
     try {
       const coordinates = await getCoordinatesFromLocation(location);
 
-      const res = await axios.post("https://alertnet-backend-mnnu.onrender.com/api/auth/register", {
+      const res = await axios.post("https://alert-net.onrender.com/api/auth/register", {
         name,
         email,
         password,

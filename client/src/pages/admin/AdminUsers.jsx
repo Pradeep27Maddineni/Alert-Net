@@ -18,7 +18,7 @@ const AdminUsers = () => {
     const fetchUsers = async () => {
       try {
         const res = await axios.get(
-          `https://alertnet-backend-mnnu.onrender.com/api/admin/users`,
+          `https://alert-net.onrender.com/api/admin/users`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -42,7 +42,7 @@ const AdminUsers = () => {
   const updateTopReporters = async () => {
     try {
       await axios.patch(
-        `https://alertnet-backend-mnnu.onrender.com/api/admin/top-reporters`,
+        `https://alert-net.onrender.com/api/admin/top-reporters`,
         { topUserIds: selectedIds },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -60,7 +60,7 @@ const AdminUsers = () => {
         : [...selectedIds, id];
 
       await axios.patch(
-        `https://alertnet-backend-mnnu.onrender.com/api/admin/top-reporters`,
+        `https://alert-net.onrender.com/api/admin/top-reporters`,
         { topUserIds: updatedIds },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -86,7 +86,7 @@ const AdminUsers = () => {
       return;
     try {
       await axios.delete(
-        `https://alertnet-backend-mnnu.onrender.com/api/admin/users/${id}`,
+        `https://alert-net.onrender.com/api/admin/users/${id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

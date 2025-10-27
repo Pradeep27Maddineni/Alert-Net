@@ -11,7 +11,7 @@ const MyIncidents = () => {
   useEffect(() => {
     const fetchMyIncidents = async () => {
       try {
-        const res = await axios.get("https://alertnet-backend-mnnu.onrender.com/api/incidents/my-incidents", {
+        const res = await axios.get("https://alert-net.onrender.com/api/incidents/my-incidents", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

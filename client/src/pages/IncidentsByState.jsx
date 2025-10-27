@@ -18,7 +18,7 @@ const IncidentsByState = () => {
       try {
         setLoading(true);
         const res = await axios.get(
-          `https://alertnet-backend-mnnu.onrender.com/api/users/by-state?state=${encodeURIComponent(stateParam)}`,
+          `https://alert-net.onrender.com/api/users/by-state?state=${encodeURIComponent(stateParam)}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

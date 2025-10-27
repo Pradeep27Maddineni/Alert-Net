@@ -34,11 +34,10 @@ const Login = () => {
       setLoading(false);
       return;
     }
-    
 
     // Send POST request
     const res = await axios.post(
-      "https://alertnet-backend-mnnu.onrender.com/api/auth/login",
+      "https://alert-net.onrender.com/api/auth/login",
       {
         email: formData.email.trim(),
         password: formData.password.trim(),
@@ -72,11 +71,7 @@ const Login = () => {
 
     // Handle backend error message or fallback
     if (err.response?.status === 400) {
-      // 💡 CHANGE: More descriptive fallback if err.response?.data?.message is empty
-      setMessage(
-        err.response?.data?.message || 
-        "Invalid email or password. (Backend 400 error: Missing message)"
-      );
+      setMessage(err.response?.data?.message || "Invalid email or password.");
     } else {
       setMessage("⚠️ Server error. Please try again later.");
     }

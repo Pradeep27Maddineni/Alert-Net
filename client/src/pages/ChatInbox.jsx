@@ -12,7 +12,7 @@ const ChatInbox = () => {
     useEffect(() => {
         const fetchChats = async () => {
             try {
-                const res = await fetch(`https://alertnet-backend-mnnu.onrender.com/api/chat/my-chats`, {
+                const res = await fetch(`https://alert-net.onrender.com/api/chat/my-chats`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 const data = await res.json();

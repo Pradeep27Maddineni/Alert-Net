@@ -14,7 +14,7 @@ const IncidentDetails = () => {
 
     const fetchIncident = async () => {
       try {
-        const res = await axios.get(`https://alertnet-backend-mnnu.onrender.com/api/incidents/${id}`, {
+        const res = await axios.get(`https://alert-net.onrender.com/api/incidents/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -36,7 +36,7 @@ const AdminReportIncident = () => {
       );
 
       const res = await axios.post(
-        "https://alertnet-backend-mnnu.onrender.com/api/admin/upload-incident",
+        "https://alert-net.onrender.com/api/admin/upload-incident",
         {
           type,
           description,
