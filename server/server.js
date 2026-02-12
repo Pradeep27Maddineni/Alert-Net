@@ -31,7 +31,6 @@ const server = http.createServer(app);
 
 // ✅ Allowed Frontend Origins
 const allowedOrigins = [
-  "https://alert-net-1.onrender.com",
   "http://localhost:5173"
 ];
 
